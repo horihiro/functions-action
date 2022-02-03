@@ -42,6 +42,9 @@ export class ResourceValidator implements IOrchestratable {
         } else if (context.authenticationType == AuthenticationType.Scm) {
             Logger.Info('Using SCM credential for authentication, GitHub Action will not perform resource validation.');
             await this.getDetailsByScm(state, context);
+            if (context.appSettings.FUNCTIONS_WORKER_RUNTIME.toLowerCase() === 'custom') {
+                Logger.Warn('Please set WEBSITE_MOUNT_ENABLED to 0 if the Function app which this action deploys to is on Linux consumption and a custom handler is used on the Function app.');
+            }
         }
 
         return StateConstant.PreparePublishContent;
