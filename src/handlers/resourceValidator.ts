@@ -42,8 +42,8 @@ export class ResourceValidator implements IOrchestratable {
         } else if (context.authenticationType == AuthenticationType.Scm) {
             Logger.Info('Using SCM credential for authentication, GitHub Action will not perform resource validation.');
             await this.getDetailsByScm(state, context);
-            if (context.appSettings.FUNCTIONS_WORKER_RUNTIME.toLowerCase() === 'custom') {
-                Logger.Warn('Please set WEBSITE_MOUNT_ENABLED to 0 if the Function app which this action deploys to is on Linux consumption and a custom handler is used on the Function app.');
+            if (context.appSettings.FUNCTIONS_WORKER_RUNTIME.toLowerCase() === 'custom' && context.appSettings.WEBSITE_MOUNT_ENABLED !== '0') {
+                Logger.Warn('Please set WEBSITE_MOUNT_ENABLED to 0 if the Function app which this action tries to deploy to is on Linux consumption and a custom handler is used on the Function app.');
             }
         }
 
@@ -177,7 +177,8 @@ export class ResourceValidator implements IOrchestratable {
             ENABLE_ORYX_BUILD: appSettings.properties['ENABLE_ORYX_BUILD'],
             SCM_DO_BUILD_DURING_DEPLOYMENT: appSettings.properties['SCM_DO_BUILD_DURING_DEPLOYMENT'],
             WEBSITE_RUN_FROM_PACKAGE: appSettings.properties['WEBSITE_RUN_FROM_PACKAGE'],
-            SCM_RUN_FROM_PACKAGE: appSettings.properties['SCM_RUN_FROM_PACKAGE']
+            SCM_RUN_FROM_PACKAGE: appSettings.properties['SCM_RUN_FROM_PACKAGE'],
+            WEBSITE_MOUNT_ENABLED: appSettings.properties['WEBSITE_MOUNT_ENABLED']
         };
         return result;
     }
@@ -222,7 +223,8 @@ export class ResourceValidator implements IOrchestratable {
             ENABLE_ORYX_BUILD: appSettings['ENABLE_ORYX_BUILD'],
             SCM_DO_BUILD_DURING_DEPLOYMENT: appSettings['SCM_DO_BUILD_DURING_DEPLOYMENT'],
             WEBSITE_RUN_FROM_PACKAGE: appSettings['WEBSITE_RUN_FROM_PACKAGE'],
-            SCM_RUN_FROM_PACKAGE: appSettings['SCM_RUN_FROM_PACKAGE']
+            SCM_RUN_FROM_PACKAGE: appSettings['SCM_RUN_FROM_PACKAGE'],
+            WEBSITE_MOUNT_ENABLED: appSettings.properties['WEBSITE_MOUNT_ENABLED']
         };
         return result
     }

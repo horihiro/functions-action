@@ -5,4 +5,5 @@ export interface IAppSettings {
     SCM_DO_BUILD_DURING_DEPLOYMENT: Readonly<string>;
     WEBSITE_RUN_FROM_PACKAGE: Readonly<string>;
     SCM_RUN_FROM_PACKAGE: Readonly<string>;
+    WEBSITE_MOUNT_ENABLED: Readonly<string>;
 }
