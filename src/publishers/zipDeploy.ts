@@ -45,7 +45,7 @@ export class ZipDeploy {
         const appSettings: IAppSettings = context.appSettings;
         if (appSettings.WEBSITE_RUN_FROM_PACKAGE !== undefined &&
             appSettings.WEBSITE_RUN_FROM_PACKAGE.trim().startsWith('http')) {
-            throw new AzureResourceError(state, "zipDepoy", "WEBSITE_RUN_FROM_PACKAGE in your function app is " +
+            throw new AzureResourceError(state, "zipDeploy", "WEBSITE_RUN_FROM_PACKAGE in your function app is " +
                 "set to an URL. Please remove WEBSITE_RUN_FROM_PACKAGE app setting from your function app.");
         }
 
